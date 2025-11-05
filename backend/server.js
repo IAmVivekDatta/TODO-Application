@@ -51,6 +51,18 @@ app.put('/todos/:id', async (req, res) => {
   res.json(todo);
 });
 
+app.patch('/todos/:id', async (req, res) => {
+  const todo = await Todo.findById(req.params.id);
+  todo.text = req.body.text;
+  await todo.save();
+  res.json(todo);
+});
+
+app.delete('/todos/:id', async (req, res) => {
+  await Todo.findByIdAndDelete(req.params.id);
+  res.json({ message: 'Todo deleted' });
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
